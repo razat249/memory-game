@@ -1,0 +1,15 @@
+#game-board {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.board {
+  width: 70px;
+  height: 70px;
+  margin: 10px;
+  display: inline-block;
+  background: #00CC99;
+  padding: 30px;
+  font-size: 2em;
+}
