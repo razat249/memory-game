@@ -25,6 +25,7 @@ function resetBoard() {
     $("#ele-" + index + "-inner").css("visibility", "hidden");
 
     $("#ele-" + index).click(function() {
+
       $("#ele-" + index + "-inner").css("visibility", "visible");
 
       numberOfSteps++
@@ -49,6 +50,10 @@ function resetBoard() {
           _.remove(opened, o => o === index)
         }
       })
+
+      if (opened.length === data.length) {
+        showCongratulationPopUp();
+      }
     })
   });
 }
@@ -105,4 +110,7 @@ $("#restart-game").click(() => {
   resetGame()
 })
 
-
+const showCongratulationPopUp = () => {
+  $('#exampleModal').modal('show');
+  $(".modal-content").html(`<div>Congratulations!</div>`)  
+}
