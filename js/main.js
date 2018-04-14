@@ -1,6 +1,7 @@
 const data = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
 let opened = []
 let temp2Opened = []
+let numberOfSteps = 0
 
 function shuffleCards(cardsList) {
   return [...cardsList].sort(function() {
@@ -25,6 +26,10 @@ function resetBoard() {
 
     $("#ele-" + index).click(function() {
       $("#ele-" + index + "-inner").css("visibility", "visible");
+
+      numberOfSteps++
+      $("#no-of-steps").text(numberOfSteps);
+
       temp2Opened.push(index)
       opened.push(index)
       console.log("Pupu")
@@ -48,4 +53,56 @@ function resetBoard() {
   });
 }
 
+let timer
+
+const gameTimer = () => {
+  let startTime = new Date().getTime();
+
+  timer = setInterval(function() {
+    let now = new Date().getTime();
+
+    let elapsed = now - startTime;
+    let minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
+    let seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
+
+    if (seconds < 10) {
+      seconds = "0" + seconds;
+    }
+
+    let currentTime = minutes + " : " + seconds;
+
+    $("#clock").text(currentTime);
+  }, 1000);
+  return timer
+};
+
+const removeGameBoardFromScreen = () => {
+  $("#game-board").empty();
+}
+
 resetBoard();
+gameTimer();
+
+const resetNumberOfSteps = () => {
+  numberOfSteps = 0
+  $("#no-of-steps").text(numberOfSteps);
+}
+
+const resetTimer = () => {
+  clearInterval(timer)
+  $("#clock").text("0 : 00");
+}
+
+const resetGame = () => {
+  removeGameBoardFromScreen();
+  resetBoard();
+  resetNumberOfSteps();
+  resetTimer();
+  gameTimer();
+}
+
+$("#restart-game").click(() => {
+  resetGame()
+})
+
+
