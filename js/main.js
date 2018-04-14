@@ -33,7 +33,7 @@ function resetBoard() {
 
       temp2Opened.push(index)
       opened.push(index)
-      console.log("Pupu")
+
       if (temp2Opened.length === 2) {
         if (shuffledCards[temp2Opened[0]] === shuffledCards[temp2Opened[1]]) {
           opened = _.uniq([...opened, ...temp2Opened])
@@ -85,9 +85,6 @@ const removeGameBoardFromScreen = () => {
   $("#game-board").empty();
 }
 
-resetBoard();
-gameTimer();
-
 const resetNumberOfSteps = () => {
   numberOfSteps = 0
   $("#no-of-steps").text(numberOfSteps);
@@ -106,11 +103,15 @@ const resetGame = () => {
   gameTimer();
 }
 
-$("#restart-game").click(() => {
+$(".restart-game").click(() => {
   resetGame()
+  $('#exampleModal').modal('hide');  
 })
 
 const showCongratulationPopUp = () => {
   $('#exampleModal').modal('show');
-  $(".modal-content").html(`<div>Congratulations!</div>`)  
+  $(".modal-body").html(`<div>Congratulations!</div>`)
+  clearInterval(timer)
 }
+
+$('#exampleModal').modal('show');
