@@ -36,6 +36,53 @@ const calculateStarRatings = (time, moves) => {
 };
 
 /**
+* @description Register click events on particular cards.
+* @param {number} index
+* @param {Array} cards
+*/
+const registerClickEvent = (index, cards) => {
+  // Register click events on the cards.
+  $("#ele-" + index).click(() => {
+    // Change star rating on every flip of the card.
+    $("#star-ratings").html(calculateStarRatings(elapsed, numberOfSteps));
+    $("#ele-" + index + "-inner").css("visibility", "visible");
+    
+    // Increase number of steps whenever user clicks a card.
+    numberOfSteps++;
+    $("#no-of-steps").text(numberOfSteps);
+
+    // append index of card values.
+    temp2Opened.push(index);
+    opened.push(index);
+
+    if (temp2Opened.length === 2) {
+      // If 2 successive cards clicked are same push there index in opened array.
+      if (cards[temp2Opened[0]] === cards[temp2Opened[1]]) {
+        opened = _.uniq([...opened, ...temp2Opened]);
+      } else { // Else remove them from opened array.
+        _.remove(opened, o => o === temp2Opened[0] || o === temp2Opened[1] );
+      }
+      temp2Opened = [];
+    }
+
+    // Only keep open those cards which matched successfully else make them hidden.
+    cards.forEach((element, index) => {
+      if(!opened.includes(index)) {
+        setTimeout(() => { 
+          $("#ele-" + index + "-inner").css("visibility", "hidden");
+          }, 500);
+        _.remove(opened, o => o === index);
+      }
+    });
+
+    // If all the cards are opened show congratulation pop up.
+    if (opened.length === data.length) {
+      showCongratulationPopUp();
+    }
+  });
+};
+
+/**
 * @description Reset board to initial state.
 */
 const resetBoard = () => {
@@ -50,46 +97,9 @@ const resetBoard = () => {
     );
     // Set visibility hidden for the card values.
     $("#ele-" + index + "-inner").css("visibility", "hidden");
-    
-    // Register click events on the cards.
-    $("#ele-" + index).click(() => {
-      // Change star rating on every flip of the card.
-      $("#star-ratings").html(calculateStarRatings(elapsed, numberOfSteps));
-      $("#ele-" + index + "-inner").css("visibility", "visible");
-      
-      // Increase number of steps whenever user clicks a card.
-      numberOfSteps++;
-      $("#no-of-steps").text(numberOfSteps);
 
-      // append index of card values.
-      temp2Opened.push(index);
-      opened.push(index);
-
-      if (temp2Opened.length === 2) {
-        // If 2 successive cards clicked are same push there index in opened array.
-        if (shuffledCards[temp2Opened[0]] === shuffledCards[temp2Opened[1]]) {
-          opened = _.uniq([...opened, ...temp2Opened]);
-        } else { // Else remove them from opened array.
-          _.remove(opened, o => o === temp2Opened[0] || o === temp2Opened[1] );
-        }
-        temp2Opened = [];
-      }
-
-      // Only keep open those cards which matched successfully else make them hidden.
-      shuffledCards.forEach((element, index) => {
-        if(!opened.includes(index)) {
-          setTimeout(() => { 
-            $("#ele-" + index + "-inner").css("visibility", "hidden");
-           }, 500);
-          _.remove(opened, o => o === index);
-        }
-      });
-
-      // If all the cards are opened show congratulation pop up.
-      if (opened.length === data.length) {
-        showCongratulationPopUp();
-      }
-    })
+    // Click events on cards.
+    registerClickEvent(index, shuffledCards)
   });
 };
 
