@@ -27,3 +27,9 @@
   width: auto;
   height: 15vh;
 }
+
+.game-stats {
+  font-weight: bolder;
+  font-size: 1.2rem;
+  padding-right: 0;
+}
