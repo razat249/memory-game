@@ -34,9 +34,9 @@ const svgStar = `<svg height="25" width="23" class="star rating" data-rating="5"
  * @returns {Array} Shuffled array
  */
 const shuffleCards = cardsList => {
-  return [...cardsList]; /* .sort(() => {
+  return [...cardsList].sort(() => {
     return 0.5 - Math.random();
-  }); */
+  });
 };
 
 /**
@@ -66,8 +66,13 @@ const registerClickEvent = (index, cards) => {
   // Register click events on the cards.
   mainCard.click(() => {
     // Change star rating on every flip of the card.
+    mainCard.addClass("board-flip");
     $("#star-ratings").html(calculateStarRatings(elapsed, numberOfSteps));
-    $("#ele-" + index + "-inner").css("visibility", "visible");
+
+    // Using seTimeouts for animation purposes.
+    setTimeout(() => {
+      $("#ele-" + index + "-inner").css("visibility", "visible");
+    }, 100);
 
     // Increase number of steps whenever user clicks a card.
     numberOfSteps++;
@@ -83,13 +88,22 @@ const registerClickEvent = (index, cards) => {
       if (cards[temp2Opened[0]] === cards[temp2Opened[1]]) {
         opened = _.uniq([...opened, ...temp2Opened]);
       } else {
-        // Else remove them from opened array.
+        // Animation stuff
+        const temp2OpenedCopy = [...temp2Opened];
+        setTimeout(() => {
+          $("#ele-" + temp2OpenedCopy[0]).removeClass("board-flip");
+          $("#ele-" + temp2OpenedCopy[1]).removeClass("board-flip");
+        }, 400);
+
+        // bind click event back.
         mainCard.bind({
           click: registerClickEvent(temp2Opened[0], cards)
         });
         mainCard.bind({
           click: registerClickEvent(temp2Opened[1], cards)
         });
+
+        // Remove them from opened array.
         _.remove(opened, o => o === temp2Opened[0] || o === temp2Opened[1]);
       }
       temp2Opened = [];
@@ -196,9 +210,11 @@ const resetGame = () => {
 const showCongratulationPopUp = () => {
   $("#game-modal").modal("show");
   $(".modal-body")
-    .html(`<div>Congratulations! You have taken ${currentTime} time.
-  Star rating is: ${calculateStarRatings(elapsed, numberOfSteps)}
-  Do you want to play again?</div>`);
+    .html(`<div>
+      Congratulations! You have taken: ${currentTime}.<br>
+      Rating: ${calculateStarRatings(elapsed, numberOfSteps)}<br>
+      Do you want to play again?
+    </div>`);
   clearInterval(timer);
 };
 

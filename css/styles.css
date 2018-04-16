@@ -16,8 +16,13 @@
   background-size: 11vh;
   background-repeat: no-repeat;
   background-position: center;
+  transition: all 0.4s ease;
 }
 
+.board-flip {
+  transform: rotateY(180deg)
+}
+  
 .card-img {
   width: auto;
   height: 15vh;
