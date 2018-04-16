@@ -47,9 +47,9 @@ const shuffleCards = cardsList => {
  */
 const calculateStarRatings = (time, moves) => {
   const timeInSeconds = time / 1000;
-  if (timeInSeconds < 30 && moves < 30) {
+  if (timeInSeconds < 30 && moves < 20) {
     return svgStar + svgStar + svgStar;
-  } else if (timeInSeconds < 45 && moves < 40) {
+  } else if (timeInSeconds < 45 && moves < 30) {
     return svgStar + svgStar;
   } else {
     return svgStar;
@@ -73,17 +73,17 @@ const registerClickEvent = (index, cards) => {
     setTimeout(() => {
       $("#ele-" + index + "-inner").css("visibility", "visible");
     }, 100);
-
-    // Increase number of steps whenever user clicks a card.
-    numberOfSteps++;
-    $("#no-of-steps").text(numberOfSteps);
-
+    
     // append index of card values.
     temp2Opened.push(index);
     opened.push(index);
     mainCard.unbind("click");
-
+    
     if (temp2Opened.length === 2) {
+      // Increase number of steps whenever user clicks a card.
+      numberOfSteps++;
+      $("#no-of-steps").text(numberOfSteps);
+
       // If 2 successive cards clicked are same push there index in opened array.
       if (cards[temp2Opened[0]] === cards[temp2Opened[1]]) {
         opened = _.uniq([...opened, ...temp2Opened]);
