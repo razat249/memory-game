@@ -203,7 +203,7 @@ const resetGame = () => {
   gameTimer();
   opened = [];
   temp2Opened = [];
-  $("#star-ratings").html(calculateStarRatings(elapsed, numberOfSteps));
+  $("#star-ratings").html(svgStar + svgStar + svgStar);
 };
 
 // Shows a modal with congratulations when a user wins the game.
