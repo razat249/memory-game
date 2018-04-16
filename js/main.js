@@ -4,14 +4,25 @@ let temp2Opened = []
 let numberOfSteps = 0
 
 function shuffleCards(cardsList) {
-  return [...cardsList].sort(function() {
+  return [...cardsList]/* .sort(function() {
     return 0.5 - Math.random();
-  });
+  }); */
 }
 
 function showCard(id) {
   $("#" + id).css("visibility", "visible")
-} 
+}
+
+const calculateStarRatings = (time, moves) => {
+  const timeInSeconds = time/1000
+  if (timeInSeconds < 30 && moves < 30 ) {
+    return "3 Stars" 
+  } else if (timeInSeconds < 45 && moves < 40) {
+    return "2 Stars"
+  } else {
+    return "1 Star"
+  }
+}
 
 function resetBoard() {
   const shuffledCards = shuffleCards(data);
@@ -22,9 +33,12 @@ function resetBoard() {
       </div>`
     );
 
+    
     $("#ele-" + index + "-inner").css("visibility", "hidden");
-
+    
+    
     $("#ele-" + index).click(function() {
+      $("#star-ratings").html(calculateStarRatings(elapsed, numberOfSteps))
 
       $("#ele-" + index + "-inner").css("visibility", "visible");
 
@@ -51,6 +65,7 @@ function resetBoard() {
         }
       })
 
+      console.log(opened.length, data.length)
       if (opened.length === data.length) {
         showCongratulationPopUp();
       }
@@ -59,6 +74,8 @@ function resetBoard() {
 }
 
 let timer
+let currentTime
+let elapsed = 0
 
 const gameTimer = () => {
   let startTime = new Date().getTime();
@@ -66,7 +83,7 @@ const gameTimer = () => {
   timer = setInterval(function() {
     let now = new Date().getTime();
 
-    let elapsed = now - startTime;
+    elapsed = now - startTime;
     let minutes = Math.floor((elapsed % (1000 * 60 * 60)) / (1000 * 60));
     let seconds = Math.floor((elapsed % (1000 * 60)) / 1000);
 
@@ -74,11 +91,10 @@ const gameTimer = () => {
       seconds = "0" + seconds;
     }
 
-    let currentTime = minutes + " : " + seconds;
+    currentTime = minutes + " : " + seconds;
 
     $("#clock").text(currentTime);
   }, 1000);
-  return timer
 };
 
 const removeGameBoardFromScreen = () => {
@@ -101,6 +117,10 @@ const resetGame = () => {
   resetNumberOfSteps();
   resetTimer();
   gameTimer();
+  opened = []
+  temp2Opened = []
+  $("#star-ratings").html(calculateStarRatings(elapsed, numberOfSteps))
+  
 }
 
 $(".restart-game").click(() => {
@@ -108,9 +128,12 @@ $(".restart-game").click(() => {
   $('#exampleModal').modal('hide');  
 })
 
+
+
 const showCongratulationPopUp = () => {
   $('#exampleModal').modal('show');
-  $(".modal-body").html(`<div>Congratulations!</div>`)
+  $(".modal-body").html(`<div>Congratulations! You have taken ${currentTime} time.
+  Do you want to play again?</div>`)
   clearInterval(timer)
 }
 
