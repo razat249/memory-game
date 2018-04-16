@@ -211,7 +211,8 @@ const showCongratulationPopUp = () => {
   $("#game-modal").modal("show");
   $(".modal-body")
     .html(`<div>
-      Congratulations! You have taken: ${currentTime}.<br>
+      Congratulations! You have won the game!!!<br> 
+      You have taken: ${currentTime}.<br>
       Rating: ${calculateStarRatings(elapsed, numberOfSteps)}<br>
       Do you want to play again?
     </div>`);
