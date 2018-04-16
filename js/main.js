@@ -1,11 +1,11 @@
 // Data to render on cards when card flips.
 const data = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
-let opened = [] // Opened cards indexes.
-let temp2Opened = [] // temporary 2 opened cards indexes.
-let numberOfSteps = 0 // No of clicks on the cards.
-let timer
-let currentTime = "0 : 00" // Formatted running time to show on screen.
-let elapsed = 0 // Elapsed time in ms.
+let opened = []; // Opened cards indexes.
+let temp2Opened = []; // temporary 2 opened cards indexes.
+let numberOfSteps = 0; // No of clicks on the cards.
+let timer;
+let currentTime = "0 : 00"; // Formatted running time to show on screen.
+let elapsed = 0; // Elapsed time in ms.
 
 /**
 * @description Shuffles cards randomly
@@ -16,7 +16,7 @@ const shuffleCards = (cardsList) => {
   return [...cardsList].sort(() => {
     return 0.5 - Math.random();
   });
-}
+};
 
 /**
 * @description Calculate star ratings according to time and number of moves.
@@ -25,15 +25,15 @@ const shuffleCards = (cardsList) => {
 * @returns {string} Star rating
 */
 const calculateStarRatings = (time, moves) => {
-  const timeInSeconds = time/1000
+  const timeInSeconds = time/1000;
   if (timeInSeconds < 30 && moves < 30 ) {
-    return "3 Stars" 
+    return "3 Stars";
   } else if (timeInSeconds < 45 && moves < 40) {
-    return "2 Stars"
+    return "2 Stars";
   } else {
-    return "1 Star"
+    return "1 Star";
   }
-}
+};
 
 /**
 * @description Reset board to initial state.
@@ -54,25 +54,25 @@ const resetBoard = () => {
     // Register click events on the cards.
     $("#ele-" + index).click(() => {
       // Change star rating on every flip of the card.
-      $("#star-ratings").html(calculateStarRatings(elapsed, numberOfSteps))
+      $("#star-ratings").html(calculateStarRatings(elapsed, numberOfSteps));
       $("#ele-" + index + "-inner").css("visibility", "visible");
       
       // Increase number of steps whenever user clicks a card.
-      numberOfSteps++
+      numberOfSteps++;
       $("#no-of-steps").text(numberOfSteps);
 
       // append index of card values.
-      temp2Opened.push(index)
-      opened.push(index)
+      temp2Opened.push(index);
+      opened.push(index);
 
       if (temp2Opened.length === 2) {
         // If 2 successive cards clicked are same push there index in opened array.
         if (shuffledCards[temp2Opened[0]] === shuffledCards[temp2Opened[1]]) {
-          opened = _.uniq([...opened, ...temp2Opened])
+          opened = _.uniq([...opened, ...temp2Opened]);
         } else { // Else remove them from opened array.
-          _.remove(opened, o => o === temp2Opened[0] || o === temp2Opened[1] )    
+          _.remove(opened, o => o === temp2Opened[0] || o === temp2Opened[1] );
         }
-        temp2Opened = []
+        temp2Opened = [];
       }
 
       // Only keep open those cards which matched successfully else make them hidden.
@@ -81,9 +81,9 @@ const resetBoard = () => {
           setTimeout(() => { 
             $("#ele-" + index + "-inner").css("visibility", "hidden");
            }, 500);
-          _.remove(opened, o => o === index)
+          _.remove(opened, o => o === index);
         }
-      })
+      });
 
       // If all the cards are opened show congratulation pop up.
       if (opened.length === data.length) {
@@ -91,7 +91,7 @@ const resetBoard = () => {
       }
     })
   });
-}
+};
 
 /**
 * @description Game timer for tracking time.
@@ -121,23 +121,23 @@ const gameTimer = () => {
 */
 const removeGameBoardFromScreen = () => {
   $("#game-board").empty();
-}
+};
 
 /**
 * @description Resets number of steps to 0 and render on screen.
 */
 const resetNumberOfSteps = () => {
-  numberOfSteps = 0
+  numberOfSteps = 0;
   $("#no-of-steps").text(numberOfSteps);
-}
+};
 
 /**
 * @description Resets timer to start again form 0 and render on the screen.
 */
 const resetTimer = () => {
-  clearInterval(timer)
+  clearInterval(timer);
   $("#clock").text("0 : 00");
-}
+};
 
 /**
 * @description Reset game to the initial state.
@@ -148,25 +148,25 @@ const resetGame = () => {
   resetNumberOfSteps();
   resetTimer();
   gameTimer();
-  opened = []
-  temp2Opened = []
-  $("#star-ratings").html(calculateStarRatings(elapsed, numberOfSteps))
+  opened = [];
+  temp2Opened = [];
+  $("#star-ratings").html(calculateStarRatings(elapsed, numberOfSteps));
   
-}
+};
 
-$(".restart-game").click(() => {
-  resetGame()
-  $('#exampleModal').modal('hide');  
-})
 
 // Shows a modal with congratulations when a user wins the game.
 const showCongratulationPopUp = () => {
   $('#exampleModal').modal('show');
   $(".modal-body").html(`<div>Congratulations! You have taken ${currentTime} time.
   Star rating is: ${calculateStarRatings(elapsed, numberOfSteps)}
-  Do you want to play again?</div>`)
-  clearInterval(timer)
-}
+  Do you want to play again?</div>`);
+  clearInterval(timer);
+};
 
 // Show start game modal on the first load.
 $('#exampleModal').modal('show');
+$(".restart-game").click(() => {
+  resetGame();
+  $('#exampleModal').modal('hide');  
+});
