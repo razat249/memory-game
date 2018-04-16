@@ -1,21 +1,21 @@
 // Data to render on cards when card flips.
 const data = [
-  `<img class="img-thumbnail card-img" src="./img/fury.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/fury.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/america.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/america.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/falcon.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/falcon.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/hulk.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/hulk.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/vision.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/vision.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/black-panther.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/black-panther.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/thanos.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/thanos.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/spider.jpeg" />`,
-  `<img class="img-thumbnail card-img" src="./img/spider.jpeg" />`
+  `<img class="img-fluid card-img" src="./img/fury.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/fury.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/america.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/america.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/falcon.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/falcon.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/hulk.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/hulk.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/vision.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/vision.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/black-panther.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/black-panther.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/thanos.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/thanos.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/spider.jpeg" />`,
+  `<img class="img-fluid card-img" src="./img/spider.jpeg" />`
 ];
 let opened = []; // Opened cards indexes.
 let temp2Opened = []; // temporary 2 opened cards indexes.
@@ -120,8 +120,8 @@ const resetBoard = () => {
   shuffledCards.forEach((element, index) => {
     // Append cards to the game board.
     $("#game-board").append(
-      `<div id="ele-${index}" class="board"> 
-        <div id="ele-${index}-inner"  >${element}</div>
+      `<div id="ele-${index}" class="board">
+          <div id="ele-${index}-inner">${element}</div>
       </div>`
     );
     // Set visibility hidden for the card values.

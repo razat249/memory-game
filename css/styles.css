@@ -9,9 +9,13 @@
   height: 18vh;
   margin: 1vh;
   display: inline-block;
-  background: #00CC99;
+  border: 2px solid #bbb;
   padding: 1vh;
   font-size: 2em;
+  background-image: url("../img/avengers-logo.jpg");
+  background-size: 11vh;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .card-img {
