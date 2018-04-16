@@ -1,5 +1,22 @@
 // Data to render on cards when card flips.
-const data = [1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8];
+const data = [
+  `<img class="img-thumbnail card-img" src="./img/fury.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/fury.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/america.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/america.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/falcon.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/falcon.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/hulk.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/hulk.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/vision.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/vision.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/black-panther.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/black-panther.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/thanos.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/thanos.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/spider.jpeg" />`,
+  `<img class="img-thumbnail card-img" src="./img/spider.jpeg" />`
+];
 let opened = []; // Opened cards indexes.
 let temp2Opened = []; // temporary 2 opened cards indexes.
 let numberOfSteps = 0; // No of clicks on the cards.
@@ -7,15 +24,19 @@ let timer;
 let currentTime = "0 : 00"; // Formatted running time to show on screen.
 let elapsed = 0; // Elapsed time in ms.
 
+const svgStar = `<svg height="25" width="23" class="star rating" data-rating="5">
+<polygon points="9.9, 1.1, 3.3, 21.78, 19.8, 8.58, 0, 8.58, 16.5, 21.78" style="fill-rule:nonzero;"/>
+</svg>`;
+
 /**
  * @description Shuffles cards randomly
  * @param {Array} cardsList
  * @returns {Array} Shuffled array
  */
 const shuffleCards = cardsList => {
-  return [...cardsList].sort(() => {
+  return [...cardsList]; /* .sort(() => {
     return 0.5 - Math.random();
-  });
+  }); */
 };
 
 /**
@@ -27,11 +48,11 @@ const shuffleCards = cardsList => {
 const calculateStarRatings = (time, moves) => {
   const timeInSeconds = time / 1000;
   if (timeInSeconds < 30 && moves < 30) {
-    return "3 Stars";
+    return svgStar + svgStar + svgStar;
   } else if (timeInSeconds < 45 && moves < 40) {
-    return "2 Stars";
+    return svgStar + svgStar;
   } else {
-    return "1 Star";
+    return svgStar;
   }
 };
 
@@ -41,7 +62,7 @@ const calculateStarRatings = (time, moves) => {
  * @param {Array} cards
  */
 const registerClickEvent = (index, cards) => {
-  const mainCard = $("#ele-" + index)
+  const mainCard = $("#ele-" + index);
   // Register click events on the cards.
   mainCard.click(() => {
     // Change star rating on every flip of the card.
@@ -173,7 +194,7 @@ const resetGame = () => {
 
 // Shows a modal with congratulations when a user wins the game.
 const showCongratulationPopUp = () => {
-  $("#exampleModal").modal("show");
+  $("#game-modal").modal("show");
   $(".modal-body")
     .html(`<div>Congratulations! You have taken ${currentTime} time.
   Star rating is: ${calculateStarRatings(elapsed, numberOfSteps)}
@@ -182,8 +203,8 @@ const showCongratulationPopUp = () => {
 };
 
 // Show start game modal on the first load.
-$("#exampleModal").modal("show");
+$("#game-modal").modal("show");
 $(".restart-game").click(() => {
   resetGame();
-  $("#exampleModal").modal("hide");
+  $("#game-modal").modal("hide");
 });

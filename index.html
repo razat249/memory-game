@@ -17,15 +17,18 @@
 </head>
 
 <body>
-  <header>
-      Memory Game Udacity
+  <header class="text-center">
+      <h1>
+        Avengers Memory Game
+      </h1>
   </header>
+  
   <section id="game-board">
 
   </section>
   <footer>
     Time: <span id="clock"></span><br>
-    Moves: <span id="no-of-steps"></span>
+    Moves: <span id="no-of-steps"></span><br>
     Star Rating: <span id="star-ratings"></span>
     <br>
     <button class="btn restart-game">Restart Game</button>
@@ -34,14 +37,11 @@
 
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="game-modal" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="game-modalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Memory Game Udacity</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <h5 class="modal-title" id="game-modalLabel">Memory Game Udacity</h5>
         </div>
         <div class="modal-body">
           Let's start the game.
